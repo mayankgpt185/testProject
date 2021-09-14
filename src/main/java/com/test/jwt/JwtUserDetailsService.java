@@ -10,24 +10,20 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.test.dao.signInDao;
-import com.test.model.DimManager;
 
 @Service
 public class JwtUserDetailsService implements UserDetailsService {
 
 	@Autowired
-	signInDao signInDao;
+	signInDao loginDao;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-		DimManager user = signInDao.loadUserByUsername(username);
+		com.test.model.DimManager user = loginDao.loadUserByUsername(username);
 		if (user.getEmail().equals(username)) {
 			return new User(user.getEmail(), user.getPassword(), new ArrayList<>());
 		} else {
 			throw new UsernameNotFoundException("User not found with username: " + username);
 		}
-
 	}
-
 }

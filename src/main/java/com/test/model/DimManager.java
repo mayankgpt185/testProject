@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "dim_manager")
@@ -38,6 +39,17 @@ public class DimManager {
 
 	@Column(name = "C_NAME")
 	private String companyName;
+
+	@Transient
+	private String tokenNo;
+
+	public String getTokenNo() {
+		return tokenNo;
+	}
+
+	public void setTokenNo(String tokenNo) {
+		this.tokenNo = tokenNo;
+	}
 
 	public Integer getManagerSkey() {
 		return managerSkey;

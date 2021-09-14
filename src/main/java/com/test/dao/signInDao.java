@@ -4,7 +4,7 @@ import com.test.model.DimManager;
 
 public interface signInDao {
 
-	public int signIn(String email, String pass);
+	public DimManager signIn(String email, String pass);
 
 	public DimManager loadUserByUsername(String email);
 }

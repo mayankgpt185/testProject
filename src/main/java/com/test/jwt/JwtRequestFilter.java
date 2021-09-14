@@ -10,13 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.filter.OncePerRequestFilter;
-
-import com.test.model.DimManager;
 
 import io.jsonwebtoken.ExpiredJwtException;
 
@@ -28,27 +26,18 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	private JwtUserDetailsService jwtUserDetailsService;
 
 	@Autowired
-	UserDetailsService userDetailsService;
-
-	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 
-	@CrossOrigin(origins = { "http://localhost:4200" })
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
 
-//		if (request.getMethod().equals("OPTIONS")) {
-//
-//		} else {
-		String requestTokenHeader = request.getHeader("authorization");
+		final String requestTokenHeader = request.getHeader("Authorization");
 
 		String username = null;
 		String jwtToken = null;
 		// JWT Token is in the form "Bearer token". Remove Bearer word and get
 		// only the Token
-		System.out.println("*********requestTokenHeader");
-		logger.warn(requestTokenHeader);
 		if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
 			jwtToken = requestTokenHeader.substring(7);
 			try {
@@ -65,12 +54,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		// Once we get the token validate it.
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-			DimManager userDetails = (DimManager) jwtUserDetailsService.loadUserByUsername(username);
+			UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(username);
+
 			// if token is valid configure Spring Security to manually set
 			// authentication
 			if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
+
 				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-						userDetails, null, null); // userDetails.getAuthorities()
+						userDetails, null, userDetails.getAuthorities());
 				usernamePasswordAuthenticationToken
 						.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				// After setting the Authentication in the context, we specify
@@ -81,6 +72,5 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		}
 		chain.doFilter(request, response);
 	}
-//	}
 
 }

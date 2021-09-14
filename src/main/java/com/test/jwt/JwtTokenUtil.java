@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 //import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -53,7 +54,7 @@ public class JwtTokenUtil implements Serializable {
 	}
 
 	// generate token for user
-	public String generateToken(com.test.model.DimManager userDetails) {
+	public String generateToken(DimManager userDetails) {
 		Map<String, Object> claims = new HashMap<>();
 		return doGenerateToken(claims, userDetails.getEmail());
 	}
@@ -72,9 +73,8 @@ public class JwtTokenUtil implements Serializable {
 	}
 
 	// validate token
-	public Boolean validateToken(String token, DimManager userDetails) {
+	public Boolean validateToken(String token, UserDetails userDetails) {
 		final String username = getUsernameFromToken(token);
-		return (username.equals(userDetails.getEmail()) && !isTokenExpired(token));
+		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
 	}
-
 }

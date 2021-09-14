@@ -21,15 +21,15 @@ public class signInDaoImpl implements signInDao {
 
 	@SuppressWarnings({ "unchecked" })
 	@Override
-	public int signIn(String email, String pass) {
+	public DimManager signIn(String email, String pass) {
 		List<DimManager> personalDetail = entityManager
 				.createQuery("Select c from DimManager c where c.email=:email and c.password=:password")
 				.setParameter("email", email).setParameter("password", pass).getResultList();
 
 		if (personalDetail.size() != 0) {
-			return 1;
+			return personalDetail.get(0);
 		} else {
-			return 0;
+			return null;
 		}
 
 	}

@@ -50,26 +50,6 @@ public class SignUpController {
 
 	}
 
-//	@ResponseBody
-//	@RequestMapping(value = "/savePasswordAndSignIn", method = RequestMethod.POST)
-//	public int savePasswordAndSignIn(@RequestBody ConfirmPassword confirmPassword) {
-//
-//		if (confirmPassword.getUserName() != null) {
-//			confirmPassword.setUserName(confirmPassword.getUserName().toLowerCase());
-//		}
-//		return signUpService.savePasswordAndSignIn(confirmPassword);
-//
-//	}
-
-//	@ResponseBody
-//	@RequestMapping(value = "/confirmCustomerDetail", method = RequestMethod.POST)
-//	public long confirmCustomerDetail(@RequestBody UserDetails userDetails) {
-//		if (userDetails.getUserName() != null) {
-//			userDetails.setUserName(userDetails.getUserName().toLowerCase());
-//		}
-//		return signUpService.confirmCustomerDetail(userDetails);
-//	}
-
 	public static String generateHash(String input) {
 		StringBuilder hash = new StringBuilder();
 

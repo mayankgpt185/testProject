@@ -1,7 +1,9 @@
 package com.test.service;
 
+import com.test.model.DimManager;
+
 public interface signInService {
 
-	int signIn(String email, String pass);
+	DimManager signIn(String email, String pass);
 
 }

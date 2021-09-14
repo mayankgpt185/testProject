@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.test.dao.signInDao;
+import com.test.model.DimManager;
 
 @Service
 public class signInServiceImpl implements signInService {
@@ -12,7 +13,7 @@ public class signInServiceImpl implements signInService {
 	signInDao signInDao;
 
 	@Override
-	public int signIn(String email, String pass) {
+	public DimManager signIn(String email, String pass) {
 		// System.out.println("service");
 		return signInDao.signIn(email, pass);
 	}
