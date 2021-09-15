@@ -23,15 +23,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public int createEmployee(DimEmployee emp) {
-
-		if (emp.getEmployeeSkey() != null) {
-			emp.setStatus(1);
-		} else {
-			emp.setStatus(1);
-		}
-
-		DimEmployee listData = entityManager.merge(emp);
-
+		emp.setStatus(1);
+		entityManager.merge(emp);
 		return 1;
 	}
 

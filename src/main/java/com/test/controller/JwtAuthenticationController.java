@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.test.jwt.JwtTokenUtil;
 import com.test.jwt.JwtUserDetailsService;
 import com.test.model.DimManager;
-import com.test.model.JwtResponse;
 import com.test.service.signInService;
 
 @RestController
@@ -46,7 +45,7 @@ public class JwtAuthenticationController {
 			cust.setTokenNo(token);
 			return ResponseEntity.ok(cust);
 		} else {
-			return ResponseEntity.ok(new JwtResponse("Invalid"));
+			return ResponseEntity.ok(("Invalid"));
 		}
 	}
 

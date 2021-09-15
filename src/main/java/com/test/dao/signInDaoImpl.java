@@ -34,6 +34,7 @@ public class signInDaoImpl implements signInDao {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public DimManager loadUserByUsername(String email) {
 		List<DimManager> personalDetail = entityManager.createQuery("Select c from DimManager c where c.email=:email")
